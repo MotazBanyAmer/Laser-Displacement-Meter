@@ -10,4 +10,11 @@ Log:
     - moved "checkRespText" from "common.h" to "app common"
     - moved "doneLaser" and "errorLaser" from "GPRS_def" to "B707C"
     - Compiled successfully
-    - working on cleaning the unsued variables
+    - working on cleaning the unsued variables, checked on the old code and the new one
+    - Removed unused variables, Compiled successfully
+    - will try build minimum working laser/B707C code in main
+    - moved "initProject" from "old main code" to "app common"
+    ☐ - commented "Timer Setup" in te appCommon in "InitProject", to be worked on later. @high
+    - compiled! note commented items in init projects(buzzer and timer)
+Ideas:
+    ☐ Think of what you can make of laser/B707C constructor.

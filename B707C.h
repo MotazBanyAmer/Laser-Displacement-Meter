@@ -14,7 +14,6 @@
 
 // #define dataFreq 15 //in seconds
 
-
 class B707C
 {
 public:
@@ -33,30 +32,24 @@ public:
     void demandData(char msgID);
 
 private:
-    boolean checkTimeout;
-    boolean timeoutSpecial;
-    boolean timeoutErrorFlag;
-    boolean errorReading;
+    // boolean timeoutErrorFlag; //!new: used in "Code_def" but commented out
 
-    //unsigned long timeoutCounter;
-    //unsigned long currentTime;
-    //boolean timeoutTrialFlag;
-    //boolean timeSetFlag = 0;
+    //unsigned long timeoutCounter;//!new: used in alot of places but commented out
+    //unsigned long currentTime; //!new: used in alot of places but commented out, also have a lot of instances as local variable of hte same name
 
-    boolean startErrorRepeatFlag = 0;
-    boolean errorTimerCounter = 0;
-    boolean errorDemand = 0;
-    byte errorStatus = 0; //0: no error, 1: new error, 2: error continoues
+    boolean startErrorRepeatFlag = 0; //!new, I think this should noe be here
+    boolean errorTimerCounter = 0;    //!new, I think this should noe be here
+    byte errorStatus = 0;             //0: no error, 1: new error, 2: error continoues //TODO:review this, this should be as modern enum or namespace or defines!
 
-    char lastCommand;
-    boolean startTimeoutFlag = 0;
+    // boolean startTimeoutFlag = 0; //!new: used in "Code_def" but commented out
 
-boolean doneLaser = 0;
-boolean errorLaser = 0;
+    boolean doneLaser = 0;
+    boolean errorLaser = 0;
 
- byte dataFreq = 15;
-
-    byte timeoutTrialsCounter;
+    byte dataFreq = 15; //TODO: I believe this should be moved
+                        /*
+    !mostly, this was replaced with defines in constants,
+    * //TODO, this this 
     enum lsrMsgs
     {
         On_Msg,
@@ -66,30 +59,23 @@ boolean errorLaser = 0;
         Slow_Msg,
         Fast_Msg
     };
+    */
 
-    boolean parseData = 0;
-
-    boolean msgEnd;
+    boolean msgEnd; //!this is used bu I belive it need review
     String LaserRcv = " ";
     char rcvChar = ' ';
-    int dataLocation;
 
-    int errorID;
-    boolean errorFlag;
+    int errorID;    //! I believe this was built in stupid quick way, need to be reviewd
+    boolean errorFlag;  //! mostly, need to be moved
 
-    int expLsrMsg;
-    int msgCounter;
-    String laserMsg;
+    String laserMsg;    //* used in main code! 
 
     char laserRcv[14];
-    boolean laserFlag = 0;
-    double distance = 0;
-    int signalQuality = 0;
 
-byte errorTrialsCounter;
+    double distance = 0;    //* used in the main code
+    int signalQuality = 0;  //* used in the main code
 
-    double temperature;
-    double voltage;
+    double temperature;     //* used in the main code,+other places
+    // double voltage; //* not used yet, shall be used in the main code + this may be moved to other place!
 };
-
 #endif
