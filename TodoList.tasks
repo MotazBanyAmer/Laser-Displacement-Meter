@@ -8,3 +8,6 @@ Log:
     - moved "laser def" and "laser func" to "B707C" .h and .cpp
     - moved Serial tweeks from "common.h" to "app config"
     - moved "checkRespText" from "common.h" to "app common"
+    - moved "doneLaser" and "errorLaser" from "GPRS_def" to "B707C"
+    - Compiled successfully
+    - working on cleaning the unsued variables

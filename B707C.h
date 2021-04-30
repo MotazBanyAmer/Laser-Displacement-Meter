@@ -2,18 +2,18 @@
 #define __B707C_H__
 
 #include "Arduino.h"
-#include "appConfig.h"
 #include "B707C_Constants.h"
+
+#include "appConfig.h"
+#include "appCommon.h"
 
 // #define timeoutDuration 1 //in seconds
 #define maxDuration 200 //in seconds
 #define timeoutDuration 4
 #define errorDuration 4
 
-byte errorTrialsCounter;
-
 // #define dataFreq 15 //in seconds
-byte dataFreq = 15;
+
 
 class B707C
 {
@@ -51,6 +51,11 @@ private:
     char lastCommand;
     boolean startTimeoutFlag = 0;
 
+boolean doneLaser = 0;
+boolean errorLaser = 0;
+
+ byte dataFreq = 15;
+
     byte timeoutTrialsCounter;
     enum lsrMsgs
     {
@@ -81,8 +86,10 @@ private:
     double distance = 0;
     int signalQuality = 0;
 
+byte errorTrialsCounter;
+
     double temperature;
     double voltage;
-}
+};
 
 #endif
