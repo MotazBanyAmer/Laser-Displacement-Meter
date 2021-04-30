@@ -2,7 +2,9 @@ Review:
     ☐ where we stopped?! @critical 
 
 Project:
-    Todo:
+    Todo: 
+        ☐ add check laser at the start of the code
+
 
 Log:
     - moved "laser def" and "laser func" to "B707C" .h and .cpp
@@ -16,5 +18,11 @@ Log:
     - moved "initProject" from "old main code" to "app common"
     ☐ - commented "Timer Setup" in te appCommon in "InitProject", to be worked on later. @high
     - compiled! note commented items in init projects(buzzer and timer)
+    - did commit and push
+    - testing!
+    - found missing member function of "waitResp_Dist"
+    - after fixing the missing function, the laser worked!
+    - commit and push
+
 Ideas:
     ☐ Think of what you can make of laser/B707C constructor.

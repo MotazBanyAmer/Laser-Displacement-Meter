@@ -18,6 +18,7 @@ class B707C
 {
 public:
     double getDistance();
+   void waitResp_Dist();
     void waitResp_Temp();
     double getSQ();
     void printSQ();

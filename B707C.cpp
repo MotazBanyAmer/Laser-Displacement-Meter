@@ -7,7 +7,39 @@ double B707C::getDistance()
     if (LaserRcv.charAt(3) == 0x20)
         return (double)(LaserRcv.charAt(4) - 0x30) * 1.0 + (double)(LaserRcv.charAt(6) - 0x30) * 0.1 + (double)(LaserRcv.charAt(7) - 0x30) * 0.01 + (double)(LaserRcv.charAt(8) - 0x30) * 0.001;
 }
-
+void B707C::waitResp_Dist() {
+  doneLaser = 0;
+  errorLaser = 0;
+  msgEnd = 0;
+  LaserRcv = " ";
+  rcvChar = ' ';
+  while (!doneLaser)
+  {
+    while (SerialLaser.available())
+    {
+      rcvChar = SerialLaser.read();
+      if (rcvChar != 0xFFFFFFFE)
+      {
+        LaserRcv += rcvChar;
+        if (rcvChar == 0x0A) {
+          msgEnd = 1;
+        }
+      }
+    }
+    if (msgEnd && checkRespText(&LaserRcv, "m,"))
+    {
+      Serial.println("Laser OK");
+      doneLaser = 1;
+      errorLaser = 0;
+    }
+    if (msgEnd && checkRespText(&LaserRcv, "Er"))
+    {
+      Serial.println("Laser Bad");
+      doneLaser = 1;
+      errorLaser = 1;
+    }
+  }
+}
 void B707C::waitResp_Temp()
 {
     doneLaser = 0;
