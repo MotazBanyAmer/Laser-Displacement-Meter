@@ -4,3 +4,7 @@ Review:
 Project:
     Todo:
 
+Log:
+    - moved "laser def" and "laser func" to "B707C" .h and .cpp
+    - moved Serial tweeks from "common.h" to "app config"
+    - moved "checkRespText" from "common.h" to "app common"
