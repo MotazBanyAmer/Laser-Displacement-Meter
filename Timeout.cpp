@@ -1,10 +1,11 @@
 #include "Timeout.h"
+#include "TimerConfig.h"
 
 void handleTimeoutCounter()
 {
   if (timeoutStartTrigger) //?what should i put here
   {
-    currentTime2 = millis();
-    timeDuration = currentTime2 - currentTime;
+    CentralTimer.currentTime2 = millis();
+    CentralTimer.timeDuration = CentralTimer.currentTime2 - CentralTimer.currentTime;
   }
 }

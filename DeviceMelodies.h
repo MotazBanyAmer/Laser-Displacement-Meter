@@ -1,7 +1,6 @@
 #ifndef __DEVICE_MELODIES_H__
 #define __DEVICE_MELODIES_H__
 
-#include "pitches.h"
 
 #define buzzerPin 43
 #define shortTone1 90
@@ -20,6 +19,7 @@ class deviceMelody
 public:
     void generateMelody(int pitch[], int duration[], int melodyLength);
     void startMelody();
+    void HTTPInitSucsMelody();
 
 private:
     int noteDurations[8];

@@ -1,4 +1,5 @@
 #include "B707C.h"
+#include "Arduino.h"
 
 double B707C::getDistance()
 {
@@ -77,7 +78,7 @@ void B707C::waitResp_Temp()
     }
 }
 
-double B707C::getSQ()
+int B707C::getSignalQuality()
 {
     int SQ = (LaserRcv.substring(11, 15)).toInt();
     return SQ;

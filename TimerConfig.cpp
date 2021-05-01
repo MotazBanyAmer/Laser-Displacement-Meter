@@ -1,4 +1,5 @@
 #include "TimerConfig.h"
+#include "Arduino.h"
 
 void setupTimer()
 {
