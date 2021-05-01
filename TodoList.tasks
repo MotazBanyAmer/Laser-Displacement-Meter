@@ -40,6 +40,12 @@ Log:
     - created timeout files
     - created central files
     - created commit checkpoint1
-
+    - alot of errors, working on solving them
+    - trasnfered melodies into OO
+    - working on isses in device melodies
+    - almost solved copilation errors
+    - added output path Arduino JSON, to save compilation time
+    - compiled successfully! converted some variable to structs and put some variables as inline
+    - 
 Ideas:
     ☐ Think of what you can make of laser/B707C constructor.
