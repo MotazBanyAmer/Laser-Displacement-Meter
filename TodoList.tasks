@@ -46,6 +46,10 @@ Log:
     - almost solved copilation errors
     - added output path Arduino JSON, to save compilation time
     - compiled successfully! converted some variable to structs and put some variables as inline
-    - 
+    - now to use the timer in the main code
+    - created errors and logger files
+    - moved central errors from laser files to errors file. this shoud be inherited later
+    - compiled successfully
+    - commit and push
 Ideas:
     ☐ Think of what you can make of laser/B707C constructor.
