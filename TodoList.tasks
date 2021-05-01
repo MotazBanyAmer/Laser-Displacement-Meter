@@ -2,6 +2,12 @@ Review:
     ☐ where we stopped?! @critical 
 
 Project:
+    Readmap:
+        ☐ Timer
+        ☐ Logger
+        ☐ Timeout
+        ☐ EEPROM
+
     Todo: 
         ☐ add check laser at the start of the code
 
@@ -27,7 +33,13 @@ Log:
     - got rid of the defines for laser data modes and commands, and used class enums
     - used enum class instead of defines in laser funciton for modes and controls
     - used static casting
-    - compiler successfully
+    - compiler successfully, commit and push
+    - NEW section, Timers
+    - moved melodies
+    - moved timer config 
+    - created timeout files
+    - created central files
+    - created commit checkpoint1
 
 Ideas:
     ☐ Think of what you can make of laser/B707C constructor.
