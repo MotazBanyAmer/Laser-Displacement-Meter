@@ -11,7 +11,7 @@ void setup()
 
 void loop()
 {
-    Laser.demandData(SlowMode_Byte);
+    Laser.demandData(static_cast<char>(B707C_dModes::SlowMode));
     Laser.waitResp_Dist();
     // delay(1000);
     Serial.println(Laser.getDistance());

@@ -23,6 +23,11 @@ Log:
     - found missing member function of "waitResp_Dist"
     - after fixing the missing function, the laser worked!
     - commit and push
+    - need to work on improving the way the library is built.
+    - got rid of the defines for laser data modes and commands, and used class enums
+    - used enum class instead of defines in laser funciton for modes and controls
+    - used static casting
+    - compiler successfully
 
 Ideas:
     ☐ Think of what you can make of laser/B707C constructor.

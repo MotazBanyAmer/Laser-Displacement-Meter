@@ -129,15 +129,15 @@ void B707C::printError()
 }
 void B707C::laserOn()
 {
-    SerialLaser.write(laserBeamON_Byte);
+    SerialLaser.write(static_cast<uint8_t>(B707C_Commands::laserBeamON));
 }
 void B707C::laserOff()
 {
-    SerialLaser.write(laserBeamOFF_Byte);
+    SerialLaser.write(static_cast<uint8_t>(B707C_Commands::laserBeamOFF));
 }
 void B707C::demandStatus()
 {
-    SerialLaser.write(moduleStatus_Byte);
+    SerialLaser.write(static_cast<uint8_t>(B707C_Commands::moduleStatus));
 }
 void B707C::demandData(char msgID)
 {
