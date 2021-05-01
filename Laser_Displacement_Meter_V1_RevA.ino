@@ -3,10 +3,11 @@
 #include "Timeout.h"
 #include "Central.h"
 #include "Errors.h"
+#include "Logger.h"
 
 B707C Laser;
 
-ISR(TIMER1_OVF_vect);
+// ISR(TIMER1_OVF_vect);
 
 void setup()
 {
@@ -18,11 +19,17 @@ void setup()
 
 void loop()
 {
+    // Serial.println(dataFreq);
+    // Serial.println(dataFlag.Upd_Laser);
+
     if (dataFlag.Upd_Laser)
     {
+        dataFlag.Upd_Laser = 0;
+        Serial.println("CentralTimer: " + String(CentralTimer.secondCounter));
+        SystemLogger log_Upd_Laser("Aquiring laser");
+
         Laser.demandData(static_cast<char>(B707C_dModes::SlowMode));
         Laser.waitResp_Dist();
-        Serial.println(Laser.getDistance());
 
         if (Laser.isDone())
         {
@@ -57,14 +64,19 @@ void loop()
         }
     }
 }
-
+int tempx1 = 0;
 ISR(TIMER1_OVF_vect) // interrupt service routine that wraps a user defined function supplied by attachInterrupt
 {
-    TCNT1 = 3036; // preload timer
+    TCNT1 = timerFq_1000Hz; // preload timer
+
     CentralTimer.mSecondCounter++;
     handleTimeoutCounter();
+    // Serial.println("mSecondCounter: " + String((uint32_t)CentralTimer.mSecondCounter));
     if (CentralTimer.mSecondCounter % 1000 == 0)
+    {
         CentralTimer.secondCounter++;
+        // Serial.println("CentralTimer1: " + String(CentralTimer.secondCounter));
+    }
 
     /*
     if (startTimeoutFlag) {
@@ -82,22 +94,49 @@ ISR(TIMER1_OVF_vect) // interrupt service routine that wraps a user defined func
   */
 
     if (CentralTimer.mSecondCounter % dataFreq_mSec == 0)
+    {
         CentralTimer.timeSetFlag = 1;
-    if (CentralTimer.mSecondCounter >= maxDuration_mSec)
-        CentralTimer.mSecondCounter = 0;
+    }
 
-    if (CentralTimer.secondCounter % dataFreq == 0)
-        CentralTimer.timeSetFlag = 1;
-    if (CentralTimer.secondCounter % dataFreq == 0) //data freq is a private member, chenge it to get function . or use enum
-        dataFlag.Upd_Temperature = 1;
-    if (CentralTimer.secondCounter % dataFreq == 0)
-        dataFlag.Upd_Laser = 1;
-    if (CentralTimer.secondCounter % dataFreq == 0)
-        dataFlag.get_Console = 1;
-    if (CentralTimer.secondCounter % dataFreq == 0)
-        dataFlag.get_OpMode = 1;
-    if (CentralTimer.secondCounter % dataFreq == 0)
-        dataFlag.get_ReqTime = 1;
+    if (CentralTimer.mSecondCounter >= maxDuration_mSec)
+    {
+        CentralTimer.mSecondCounter = 0;
+    }
+
+    if (CentralTimer.secondCounter > 0)
+    {
+        if (CentralTimer.secondCounter % dataFreq == 0)
+        {
+            CentralTimer.timeSetFlag = 1;
+        }
+        if (CentralTimer.secondCounter % dataFreq == 0) //data freq is a private member, chenge it to get function . or use enum
+        {
+            dataFlag.Upd_Temperature = 1;
+
+            // Serial.println("dataFreq mod: " + String(CentralTimer.secondCounter % dataFreq));
+            // Serial.println("CentralTimer: " + String(CentralTimer.secondCounter));
+            // Serial.println("dataFreq: " + String(dataFreq));
+            // Serial.println("tempx1: " + String(tempx1++));
+        }
+        if (CentralTimer.secondCounter % dataFreq == 0)
+        {
+            dataFlag.Upd_Laser = 1;
+        }
+        if (CentralTimer.secondCounter % dataFreq == 0)
+        {
+            dataFlag.get_Console = 1;
+        }
+        if (CentralTimer.secondCounter % dataFreq == 0)
+        {
+            dataFlag.get_OpMode = 1;
+        }
+        if (CentralTimer.secondCounter % dataFreq == 0)
+        {
+            dataFlag.get_ReqTime = 1;
+        }
+    }
     if (CentralTimer.secondCounter >= maxDuration)
+    {
         CentralTimer.secondCounter = 0;
+    }
 }

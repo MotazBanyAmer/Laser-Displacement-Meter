@@ -1,5 +1,6 @@
 #include "appCommon.h"
 #include "appConfig.h""
+#include "TimerConfig.h"
 boolean checkRespText(String *str, String resp)
 {
   if (str->indexOf(resp) != -1) return 1;
@@ -18,7 +19,7 @@ void initProject()
 
   // pinMode(buzzerPin, OUTPUT);
 
-  // setupTimer(); //!important !new, commented for later
+   setupTimer(); //!important !new, commented for later
 }
 void startup_actions()
 {

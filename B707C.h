@@ -16,23 +16,34 @@
 class B707C
 {
 public:
-    double getDistance();
+    //Print
+    void printSQ();
+    void printError();
+    //Wait
     void waitResp_Dist();
     void waitResp_Temp();
-    int getSignalQuality();
-    void printSQ();
+
+    //Setters
+
+
+    //Getters
+    double getDistance();
     double getTemp();
     double getVlt();
+    int getSignalQuality();
+
+    //Status
     void getError();
-
-    void printError();
-    void laserOn();
-    void laserOff();
-    void demandStatus();
-    void demandData(char msgID);
-
     bool isDone() { return doneLaser; }
     bool isThereError() { return errorLaser; }
+
+    //Funciton Commands
+    void laserOn();
+    void laserOff();
+
+    //Data Commands
+    void demandStatus();
+    void demandData(char msgID);
 
 private:
     // boolean timeoutErrorFlag; //!new: used in "Code_def" but commented out
@@ -44,20 +55,6 @@ private:
 
     boolean doneLaser = 0;
     boolean errorLaser = 0;
-
-    /*
-    !mostly, this was replaced with defines in constants,
-    * //TODO, this this 
-    enum lsrMsgs
-    {
-        On_Msg,
-        Off_Msg,
-        Stat_Msg,
-        Auto_Msg,
-        Slow_Msg,
-        Fast_Msg
-    };
-    */
 
     boolean msgEnd; //!this is used bu I belive it need review
     String LaserRcv = " ";
