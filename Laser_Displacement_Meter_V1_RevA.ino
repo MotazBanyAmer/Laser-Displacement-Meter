@@ -24,8 +24,9 @@ void loop()
 
     if (dataFlag.Upd_Laser)
     {
-        dataFlag.Upd_Laser = 0;
-        Serial.println("CentralTimer: " + String(CentralTimer.secondCounter));
+        // Serial.println("dataFreq mod: " + String(CentralTimer.secondCounter % dataFreq));
+        // Serial.println("CentralTimer: " + String(CentralTimer.secondCounter));
+
         SystemLogger log_Upd_Laser("Aquiring laser");
 
         Laser.demandData(static_cast<char>(B707C_dModes::SlowMode));
@@ -35,14 +36,19 @@ void loop()
         {
             if (!Laser.isThereError()) //*reading success, send the reading
             {
+                // Serial.println("~no error!");
                 //SerialDebug.println("Reading Laser -- Slow");
                 payload_Data.distance = Laser.getDistance();
                 payload_Data.signalQuality = Laser.getSignalQuality();
 
-                SerialDebug.print("Distance : ");
-                SerialDebug.println(payload_Data.distance, 3);
-                SerialDebug.print("signal Quality : ");
-                SerialDebug.println(payload_Data.signalQuality);
+                // SerialDebug.print("Distance : ");
+                // SerialDebug.println(payload_Data.distance, 3);
+                // SerialDebug.print("signal Quality : ");
+                // SerialDebug.println(payload_Data.signalQuality);
+                log_Upd_Laser.add_log("Distance : " + String(payload_Data.distance, 3));
+                log_Upd_Laser.add_log("Distance : " + String(payload_Data.distance, 3));
+                log_Upd_Laser.push_log();
+                // Serial.println("~pushed!");
             }
             else if (Laser.isThereError()) //*reading error, set value: 0.0 and send
             {
@@ -62,6 +68,8 @@ void loop()
                     errorStatus = 2;
             }
         }
+
+        dataFlag.Upd_Laser = 0;
     }
 }
 int tempx1 = 0;
