@@ -61,5 +61,9 @@ Log:
     ☐ - stopped here, next is to improve the laser class, and maybe the logger class, and maybe to add indentation to the printed data associated with the current loging stack
     - worked on the logging system 
     - having issue, the system keeps restarting , still dont know where
+    - issue solved, it was due not adding return keyword
+    - now the system works, with leveling of log works as well
+    ☐ - next move add a branch to the commit
+    ☐ - a lot of notes as paper, check and add them
 Ideas:
     ☐ Think of what you can make of laser/B707C constructor.
