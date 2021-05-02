@@ -45,7 +45,7 @@ void loop()
                 // SerialDebug.println(payload_Data.distance, 3);
                 // SerialDebug.print("signal Quality : ");
                 // SerialDebug.println(payload_Data.signalQuality);
-                log_Upd_Laser.add_log("Distance : " + String(payload_Data.distance, 3));
+                log_Upd_Laser.add_log("Laser OK");
                 log_Upd_Laser.add_log("Distance : " + String(payload_Data.distance, 3));
                 log_Upd_Laser.push_log();
                 // Serial.println("~pushed!");

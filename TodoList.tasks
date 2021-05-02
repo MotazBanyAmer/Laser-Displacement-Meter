@@ -22,7 +22,7 @@ Log:
     - Removed unused variables, Compiled successfully
     - will try build minimum working laser/B707C code in main
     - moved "initProject" from "old main code" to "app common"
-    ☐ - commented "Timer Setup" in te appCommon in "InitProject", to be worked on later. @high
+    - commented "Timer Setup" in te appCommon in "InitProject", to be worked on later
     - compiled! note commented items in init projects(buzzer and timer)
     - did commit and push
     - testing!
@@ -51,5 +51,15 @@ Log:
     - moved central errors from laser files to errors file. this shoud be inherited later
     - compiled successfully
     - commit and push
+    - worked though and solved issues and compiled
+    - uploaded the code for testing, testing the logger, it works and I have made updates and upgrades
+    - added indentation for logging
+    - added common counter and ref number
+    - currently Im having issues with main code. the laser is enabled twice I dont know why
+    - the problem is in the code but I cant find it!!!!
+    - problem sovlved by moving the fag clear to the end of the statment, dont know why but it worked
+    ☐ - stopped here, next is to improve the laser class, and maybe the logger class, and maybe to add indentation to the printed data associated with the current loging stack
+    - worked on the logging system 
+    - having issue, the system keeps restarting , still dont know where
 Ideas:
     ☐ Think of what you can make of laser/B707C constructor.

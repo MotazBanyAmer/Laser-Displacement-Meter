@@ -17,6 +17,6 @@ struct Payload_Data {
 };
 inline struct Payload_Data payload_Data;
 
-inline uint8_t dataFreq = 15; //TODO: I believe this should be moved
+inline uint8_t dataFreq = 8; //TODO: I believe this should be moved
 
 #endif

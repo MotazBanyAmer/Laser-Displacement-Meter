@@ -34,13 +34,14 @@ void B707C::waitResp_Dist()
         }
         if (msgEnd && checkRespText(&LaserRcv, "m,"))
         {
-            Serial.println("Laser OK");
+                // log_Upd_Laser.add_log("Laser OK);
+            // Serial.println("Laser OK");
             doneLaser = 1;
             errorLaser = 0;
         }
         if (msgEnd && checkRespText(&LaserRcv, "Er"))
         {
-            Serial.println("Laser Bad");
+            // Serial.println("Laser Bad");
             doneLaser = 1;
             errorLaser = 1;
         }
