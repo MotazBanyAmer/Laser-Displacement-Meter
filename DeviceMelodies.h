@@ -1,7 +1,6 @@
 #ifndef __DEVICE_MELODIES_H__
 #define __DEVICE_MELODIES_H__
 
-
 #define buzzerPin 43
 #define shortTone1 90
 #define shortTone2 125
@@ -20,6 +19,7 @@ public:
     void generateMelody(int pitch[], int duration[], int melodyLength);
     void startMelody();
     void HTTPInitSucsMelody();
+    void startup_melody();
 
 private:
     int noteDurations[8];

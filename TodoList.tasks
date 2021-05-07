@@ -65,5 +65,10 @@ Log:
     - now the system works, with leveling of log works as well
     ☐ - next move add a branch to the commit
     ☐ - a lot of notes as paper, check and add them
+    - improved logging,
+    - added paramter logging functions
+    - fixed issue in logging (nested logging arrow indentation)
+    - place holders for the data updates and request
 Ideas:
     ☐ Think of what you can make of laser/B707C constructor.
+    ☐ add logging level

@@ -34,7 +34,7 @@ void B707C::waitResp_Dist()
         }
         if (msgEnd && checkRespText(&LaserRcv, "m,"))
         {
-                // log_Upd_Laser.add_log("Laser OK);
+            // log_Upd_Laser.add_log_plain("Laser OK);
             // Serial.println("Laser OK");
             doneLaser = 1;
             errorLaser = 0;
@@ -70,20 +70,19 @@ void B707C::waitResp_Temp()
         }
         if (msgEnd && checkRespText(&LaserRcv, "C,"))
         {
-            Serial.println("Temp OK");
-            Serial.println(LaserRcv);
+            // Serial.println("Temp OK");
+            // Serial.println(LaserRcv);
             doneLaser = 1;
             errorLaser = 0;
         }
         if (msgEnd && checkRespText(&LaserRcv, "Er"))
         {
-            Serial.println("Temp Bad");
+            // Serial.println("Temp Bad");
             doneLaser = 1;
             errorLaser = 1;
         }
     }
 }
-
 int B707C::getSignalQuality()
 {
     int SQ = (LaserRcv.substring(11, 15)).toInt();
@@ -144,10 +143,22 @@ void B707C::laserOff()
 }
 void B707C::demandStatus()
 {
+    SystemLogger logger_demandStatus("Demand Status");
+
     SerialLaser.write(static_cast<uint8_t>(B707C_Commands::moduleStatus));
 }
 void B707C::demandData(char msgID)
 {
-    SystemLogger log_damandData("Demand Data");
+    SystemLogger logger_damandData("Demand Data");
+    String modeStr;
+    if (msgID == static_cast<char>(B707C_dModes::SlowMode))
+        modeStr = "Slow Mode";
+    if (msgID == static_cast<char>(B707C_dModes::AutoMode))
+        modeStr = "Auto Mode";
+    if (msgID == static_cast<char>(B707C_dModes::FastMode))
+        modeStr = "Fast Mode";
+
+    logger_damandData.add_log_parameter("Mode", modeStr);
+    logger_damandData.push_log();
     SerialLaser.write(msgID);
 }

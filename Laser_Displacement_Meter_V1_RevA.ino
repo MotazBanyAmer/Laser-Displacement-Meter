@@ -19,15 +19,9 @@ void setup()
 
 void loop()
 {
-    // Serial.println(dataFreq);
-    // Serial.println(dataFlag.Upd_Laser);
-
     if (dataFlag.Upd_Laser)
     {
-        // Serial.println("dataFreq mod: " + String(CentralTimer.secondCounter % dataFreq));
-        // Serial.println("CentralTimer: " + String(CentralTimer.secondCounter));
-
-        SystemLogger log_Upd_Laser("Aquiring laser");
+        SystemLogger logger_Upd_Laser("Aquiring laser");
 
         Laser.demandData(static_cast<char>(B707C_dModes::SlowMode));
         Laser.waitResp_Dist();
@@ -36,19 +30,13 @@ void loop()
         {
             if (!Laser.isThereError()) //*reading success, send the reading
             {
-                // Serial.println("~no error!");
-                //SerialDebug.println("Reading Laser -- Slow");
                 payload_Data.distance = Laser.getDistance();
                 payload_Data.signalQuality = Laser.getSignalQuality();
 
-                // SerialDebug.print("Distance : ");
-                // SerialDebug.println(payload_Data.distance, 3);
-                // SerialDebug.print("signal Quality : ");
-                // SerialDebug.println(payload_Data.signalQuality);
-                log_Upd_Laser.add_log("Laser OK");
-                log_Upd_Laser.add_log("Distance : " + String(payload_Data.distance, 3));
-                log_Upd_Laser.push_log();
-                // Serial.println("~pushed!");
+                logger_Upd_Laser.add_log_plain("Laser OK");
+                logger_Upd_Laser.add_log_parameter("Distance", payload_Data.distance, 3);
+                logger_Upd_Laser.add_log_parameter("signalQuality", payload_Data.signalQuality, 2);
+                logger_Upd_Laser.push_log();
             }
             else if (Laser.isThereError()) //*reading error, set value: 0.0 and send
             {
@@ -69,7 +57,43 @@ void loop()
             }
         }
 
+        //todo: post online
+
         dataFlag.Upd_Laser = 0;
+    }
+    if (dataFlag.get_Console)
+    {
+        SystemLogger logger_getConsole("Getting Console");
+        //todo: GET command
+
+        dataFlag.get_Console = 0;
+    }
+    if (dataFlag.get_OpMode)
+    {
+        SystemLogger logger_getOpMode("Getting Op Mode");
+        //todo: GET command
+
+        dataFlag.get_OpMode = 0;
+    }
+    if (dataFlag.get_ReqTime)
+    {
+        SystemLogger logger_getReqTime("Getting Request Time");
+        //todo: GET command
+
+        dataFlag.get_ReqTime = 0;
+    }
+    if (dataFlag.Upd_Temperature)
+    {
+        SystemLogger logger_Upd_Temperature("Aquiring laser");
+
+        Laser.demandStatus();
+        Laser.waitResp_Temp();
+        payload_Data.temperature = Laser.getTemp();
+
+        //todo: send post
+        logger_Upd_Temperature.add_log_parameter("Temperature", payload_Data.temperature, 2);
+        logger_Upd_Temperature.push_log();
+        dataFlag.Upd_Temperature = 0;
     }
 }
 int tempx1 = 0;

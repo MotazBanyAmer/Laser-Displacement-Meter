@@ -16,7 +16,7 @@ SystemLogger::SystemLogger(String Context) //:tempContext(Context), templogRefNu
     tempContext = Context;
     templogRefNum = logRefNum++;
     // templogRefNum = logRefNum;
-    logMessage = build_log("\t> Opened: " + Context);
+    logMessage = build_log("\t> Opened: " + Context, __ntSubLog);
     // Serial.println("!ok");
     // logMessage = tempLogStack_indent + "log#" + String(logIncNum++) + "\tRef#" + String(templogRefNum) + "\tTime = " + String(logTime) + ;
     SerialLogger.println(logMessage);
@@ -27,8 +27,8 @@ SystemLogger::~SystemLogger()
     // Serial.println("~destructing!");
     logStack--;
 
-    logMessage = build_log("\t> Closed: " + tempContext);
-    SerialLogger.println(logMessage);
+    logMessage = build_log("\t> Closed: " + tempContext, __ntSubLog);
+    SerialLogger.println(logMessage+"\n");
 
     // Serial.println("~destructed!");
     // logMessage_push = "";
@@ -44,25 +44,51 @@ void SystemLogger::push_log()
     SerialLogger.print(logMessage_push);
     logMessage_push = "";
 }
-void SystemLogger::add_log(String log_message)
+void SystemLogger::add_log_plain(String log_message)
 {
-    // Serial.println("~Adding");
-    // Serial.println("~logMessage_push before: " + logMessage_push);
-    String tempString = ">" + build_log("\t> " + log_message) + "\n";
+    String tempString = build_log("\t> " + log_message, __isSubLog) + "\n";
     logMessage_push += tempString;
-
-    // Serial.println("~logMessage_push after: " + logMessage_push);
-    // Serial.println("~Added");
+    //todo, maybe I will need to add counter
+    //todo, meybe I will need to change the type string to array or vector of string
+    //todo, maybe I will need to change the type from direct string to struct
+    //same applies for add parameters
 }
-String SystemLogger::build_log(String _log_string)
+void SystemLogger::add_log_parameter(String log_message, uint32_t value)
+{
+    add_log_plain(log_message + ": " + String(value));
+    // String tempString = ">" + build_log("\t> " + log_message + ) + "\n";
+    // logMessage_push += tempString;
+}
+void SystemLogger::add_log_parameter(String log_message, double value, uint8_t prec)
+{
+    add_log_plain(log_message + ": " + String(value, prec));
+    // String tempString = ">" + build_log("\t> " + log_message + String(value)) + "\n";
+    // logMessage_push += tempString;
+}
+void SystemLogger::add_log_parameter(String log_message, String value)
+{
+    add_log_plain(log_message + ": " + String(value));
+    // String tempString = ">" + build_log("\t> " + log_message + String(value)) + "\n";
+    // logMessage_push += tempString;
+}
+String SystemLogger::build_log(String _log_string, bool subLog)
 {
     String temp_logMessage;
-    // Serial.println("~Building");
+    String temp_logHdr;
+
     logTime = millis() / __logTimePrescaler;
+    if (subLog)
+    {
+        temp_logHdr = "|>log#";
+    }
+    else if (!subLog)
+    {
+        temp_logHdr = ">log#";
+    }
 
     temp_logMessage =
         tempLogStack_indent +
-        ">log#" + String(logIncNum++) +
+        temp_logHdr + String(logIncNum++) +
         "\tRef#" + String(templogRefNum) +
         "\tTime = " + String(logTime) +
         _log_string;

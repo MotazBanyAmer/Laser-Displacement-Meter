@@ -35,7 +35,13 @@ void deviceMelody::generateMelody(int pitch[], int duration[], int melodyLength)
         noTone(buzzerPin);
     }
 }
-
+void deviceMelody::startup_melody()
+{
+  tone(buzzerPin, NOTE_C6, shortTone3);
+  delay(shortTone3 * mult1);
+  tone(buzzerPin, NOTE_C6, shortTone3);
+  delay(shortTone3 * mult1);
+}
 void deviceMelody::HTTPInitSucsMelody()
 {
     melody[0] = NOTE_E6;

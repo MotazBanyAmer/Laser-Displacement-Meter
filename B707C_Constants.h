@@ -9,7 +9,7 @@ laserBeamOFF = 0x43,    // 'M'
 moduleStatus = 0x53     // 'F'
 };
 
-enum class B707C_dModes
+enum class B707C_dModes:char
 {
 AutoMode = 0x44,    //'D'
 SlowMode = 0x4D,    // 'M'
