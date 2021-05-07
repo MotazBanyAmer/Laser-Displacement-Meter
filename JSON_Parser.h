@@ -8,25 +8,20 @@
 #define comma ","
 #define colon ":"
 
-String obj_value;
-String obj_id;
-String obj_date;
-String obj_feed_key;
+class JSON_Parser
+{
+public:
+    String getNames();
+    String getValues(String context1, String context2);
+    byte getPairsCount();
+    void getAllJSON(String JSONobj);
+    String getCertainString(String JSONobj, String searchName);
+    long getCertainNumber(String JSONobj, String searchName);
 
-class JSON_Parser{
-    public:
-
-String getNames();
-String getValues(String context1, String context2);
-byte getPairsCount();
-void getAllJSON(String JSONobj);
-String getCertainString(String JSONobj, String searchName);
-long getCertainNumber(String JSONobj, String searchName);
-
-    private:
-String names[7];
-String values[7];
-String tempMsg;
+private:
+    String names[7];
+    String values[7];
+    String tempMsg;
 };
 /*
   #define __number        0   //Int type
@@ -35,8 +30,5 @@ String tempMsg;
   #define __JSON_obj      3   //not implemented yet
   #define __JSON_arr      4   //not implemented yet
 */
-
-
-
 
 #endif
