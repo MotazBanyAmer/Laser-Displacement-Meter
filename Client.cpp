@@ -111,7 +111,6 @@ void load_HTTP_Parameter(String para, String contentHeader, String headerValue)
     SerialSIM.println("AT+HTTPPARA=\"" + para + "\",\"" + contentHeader + ": " + headerValue + '"');
     waitResp();
 }
-
 int getRespMeta(String respMeta)
 { //check that ((3))
     byte temp1 = respMeta.indexOf("+HTTPACTION");
@@ -184,4 +183,108 @@ void readHTTP_resp()
     waitResp();
     //debugResp(__resp);
     parseHTTP_read(globalResp);
+}
+
+void initlize_HTTPs()
+{
+    SerialSIM.print(SgnlStr);
+    waitResp();
+    debugResp(__resp);
+    SerialSIM.print(Provider);
+    waitResp();
+    debugResp(__resp);
+    SerialSIM.print(APN);
+    waitResp();
+    debugResp(__resp);
+    SerialSIM.print(GPRSType);
+    waitResp();
+    debugResp(__resp);
+    SerialSIM.print(query1);
+    waitResp();
+    debugResp(__resp);
+    SerialSIM.print(checkIP);
+    waitResp();
+    debugResp(__resp);
+    load_HTTP_Parameter(__Para_CID, CID_value); // need to review the message to send
+    debugResp(__resp);
+}
+void load_URL_POST(String feedKey)
+{
+    API_URL = buildAPI_URL(feedKey);
+    load_HTTP_Parameter(__Para_URL, API_URL);
+}
+void load_URL_GET(String feedKey, unsigned int limit)
+{
+    API_URL = buildAPI_URL(feedKey, limit);
+    load_HTTP_Parameter(__Para_URL, API_URL);
+}
+void load_HTTP_Headers()
+{
+    load_HTTP_Parameter(__Para_Userdata, __hdr_x_aio_key, x_aio_key);
+    //debugResp(__resp);
+    load_HTTP_Parameter(__Para_content, content_value);
+    //debugResp(__resp);
+}
+void send_POST(String feed, String _value)
+{
+    //load_HTTP_Parameter(__Para_CID, CID_value); // need to review the message to send
+    //debugResp(__resp);
+    load_URL_POST(feed);
+    //debugResp(__resp);
+    //load_HTTP_Headers();
+    load_HTTP_Parameter(__Para_Userdata, __hdr_x_aio_key, x_aio_key);
+    //debugResp(__resp);
+    load_HTTP_Parameter(__Para_content, content_value);
+    //debugResp(__resp);
+    load_HTTP_Data(_value);
+    //debugResp(__resp);
+    //done or error .. read response code, then read data if needed
+    //later parse data if needed
+    SerialDebug.println("Updating...");
+    action_POST();
+    //debugResp(__resp);
+    getRespMeta(globalResp);
+    //SerialDebug.println(respCode);
+    //SerialDebug.println(respMethod);
+    //SerialDebug.println(dataLength);
+
+    if (respCode == "200")
+    {
+        readHTTP_resp();
+        SerialDebug.println("Updating Success Successfully!");
+    }
+    JSONResp_value = getCertainString(HTTPread_dataContent, "value");
+    JSONResp_id = getCertainString(HTTPread_dataContent, "id");
+    //SerialDebug.println("POST - JSON value: " + JSONResp_value); // this most likly to not be used here, this should be in get only, ((4))
+    //SerialDebug.println("POST - JSON id: " + JSONResp_id); // this most likly to not be used here, this should be in get only, ((4))
+}
+void send_GET(String feed, int dataLimit = 1)
+{
+    //load_HTTP_Parameter(__Para_CID, CID_value); // need to review the message to send
+    //debugResp(__resp);
+    load_URL_GET(feed, dataLimit);
+    //debugResp(__resp);
+    load_HTTP_Parameter(__Para_Userdata, __hdr_x_aio_key, x_aio_key);
+    //debugResp(__resp);
+    action_GET();
+    getRespMeta(globalResp);
+    //debugResp(__resp);
+    //SerialDebug.println("((5))" + globalResp);
+    getRespMeta(globalResp);
+    //SerialDebug.println(respCode);
+    //SerialDebug.println(respMethod);
+    //SerialDebug.println(dataLength);
+
+    if (respCode == "200")
+    {
+        readHTTP_resp();
+        SerialDebug.println("Getting Data Successfully!");
+    }
+
+    JSONResp_value = getCertainString(HTTPread_dataContent, "value");
+    JSONResp_id = getCertainString(HTTPread_dataContent, "id");
+    //SerialDebug.println("GET- JSON value: " + JSONResp_value); // this most likly to not be used here, this should be in get only, ((4))
+    //SerialDebug.println("GET- JSON id: " + JSONResp_id); // this most likly to not be used here, this should be in get only, ((4))
+    //done or error .. read data
+    //later parse data
 }
