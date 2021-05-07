@@ -22,6 +22,36 @@ public:
     adfruitio_Client(/* args */);
     ~adfruitio_Client();
     String API_URL;
+void debugResp(byte debugPayload = 0x00, String _text = " ")
+
+//wait resp Types: null :OK || 1, check and Get Payload || 2: check content
+void waitResp(String textOK = respOk, String textError = respError)
+
+void checkSimDevice();
+void httpsInit();
+
+String buildAPI_URL(String _feedKey);
+String buildAPI_URL(String _feedKey, int _limit);
+
+void load_HTTP_Parameter(String para, String content);
+void load_HTTP_Parameter(String para, String contentHeader, String headerValue);
+int getRespMeta(String respMeta);
+
+void action_POST();
+void action_GET();
+String buildJSON_snglObj(String JSON_name, String JSON_value);
+void load_HTTP_Data(String _value);
+void parseHTTP_read(String readResp);
+void readHTTP_resp();
+
+void initlize_HTTPs();
+void load_URL_POST(String feedKey);
+void load_URL_GET(String feedKey, unsigned int limit);
+void load_HTTP_Headers();
+void send_POST(String feed, String _value);
+void send_GET(String feed, int dataLimit = 1);
+
+    
 
 private:
     /* data */
@@ -38,6 +68,7 @@ private:
     String value;
     int HTTPread_datalength; // maybe used for confirming the message is right
     String HTTPread_dataContent;
+
 };
 
 #endif
