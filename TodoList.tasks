@@ -69,6 +69,20 @@ Log:
     - added paramter logging functions
     - fixed issue in logging (nested logging arrow indentation)
     - place holders for the data updates and request
+    - added the base for the error handler, tested on Visual Studio on CPP
+    - now working on GPRS, moving things from old code
+    - 
 Ideas:
     ☐ Think of what you can make of laser/B707C constructor.
     ☐ add logging level
+
+Where to continue:
+    - move functions from GPRS_Fun.h to SIM808_GPRS and create a class for the main functions
+    - arrange the SIM header defines
+    later:
+        - check whether to add the wait functions each to its class, or to create a global one
+            - affected classes:
+                -  GPRS
+                - Laser
+        - maybe to inhernet from hte wainting class to the wanted class, to use a generaic waitng function,        
+                        

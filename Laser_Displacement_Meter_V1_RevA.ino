@@ -42,8 +42,10 @@ void loop()
             {
                 payload_Data.distance = 0.0;
                 payload_Data.signalQuality = 0;
+
                 // SerialDebug.print("Slow_Msg Error : ");
                 // SerialDebug.println(laserMsg.substring(4, 6));   //!new, fix this
+               
                 Laser.getError();
 
                 errorTimerCounter = 0;
