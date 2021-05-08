@@ -16,7 +16,8 @@ void setup()
     initProject(); //Initialize project
     startup_actions();
     ClientConnection.checkSimDevice();
-    ClientConnection.initlize_HTTPs();
+    ClientConnection.initlize_SIM_GPRS();
+    ClientConnection.initlize_SIM_HTTPS();
 
     //Laser.laserOn();
 }
@@ -47,6 +48,10 @@ void loop()
                 payload_Data.distance = 0.0;
                 payload_Data.signalQuality = 0;
 
+                logger_Upd_Laser.add_log_plain("Laser Error");
+                logger_Upd_Laser.add_log_parameter("Distance", payload_Data.distance, 3);
+                logger_Upd_Laser.add_log_parameter("signalQuality", payload_Data.signalQuality, 2);
+                logger_Upd_Laser.push_log();
                 // SerialDebug.print("Slow_Msg Error : ");
                 // SerialDebug.println(laserMsg.substring(4, 6));   //!new, fix this
 
@@ -63,6 +68,8 @@ void loop()
             }
         }
 
+        logger_Upd_Laser.add_log_plain("POSTing laser");
+        logger_Upd_Laser.push_log();
         //todo: post online
 
         ClientConnection.send_POST(__feeds_lsrDist, String(payload_Data.distance, 3));

@@ -171,7 +171,7 @@ String SIM808_GPRS::setupPOSTMessage(String stringValue)
     stringValueExt = stringValue;
     return Message + stringValue + "\"}\n";
 }
-void SIM808_GPRS::updateProcedure(double updateValue)
+void SIM808_GPRS::updateProcedure(double updateValue)   //send through GPRS port directly
 {
     //  message
     SerialSIM.print(Start);
@@ -184,7 +184,7 @@ void SIM808_GPRS::updateProcedure(double updateValue)
     Serial.println("Sending...");
     waitResp_sent();
 }
-void SIM808_GPRS::initConnection()
+void SIM808_GPRS::initConnection()  //init GPRS direct connection, not HTTP
 {
     Serial.println("Init Process");
     // Serial.print(Shut);

@@ -1,3 +1,6 @@
+#ifndef __LOGGER_H__
+#define __LOGGER_H__
+
 #include "Arduino.h"
 
 // #include <vector>
@@ -47,3 +50,4 @@ private:
     uint8_t templogStack;
     String tempLogStack_indent = "";
 };
+#endif

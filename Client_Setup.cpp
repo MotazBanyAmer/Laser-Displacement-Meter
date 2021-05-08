@@ -58,7 +58,7 @@ String adfruitio_Client::buildJSON_snglObj(String JSON_name, String JSON_value)
 }
 
 
-void adfruitio_Client::httpsInit()
+void adfruitio_Client::initlize_SIM_HTTPS()
 {
     SerialSIM.println(HTTPInit);
     waitResp();
@@ -66,7 +66,7 @@ void adfruitio_Client::httpsInit()
     waitResp();
 }
 
-void adfruitio_Client::initlize_HTTPs()
+void adfruitio_Client::initlize_SIM_GPRS()
 {
     SerialSIM.print(SgnlStr);
     waitResp();

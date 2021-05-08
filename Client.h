@@ -7,6 +7,7 @@
 #include "JSON_Parser.h"
 #include "appCommon.h"
 #include "appConfig.h"
+#include "Logger.h"
 
 //@URL
 #define __Para_URL "URL"
@@ -30,8 +31,9 @@ public:
     String get_Resp_value();
     String get_Resp_id();
 
-    void initlize_HTTPs();
-    void httpsInit();
+    void initlize_SIM_GPRS();
+    void initlize_SIM_HTTPS();
+
     void checkSimDevice();
 
 private:
