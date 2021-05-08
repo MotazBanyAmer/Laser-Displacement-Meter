@@ -8,11 +8,13 @@ adfruitio_Client::~adfruitio_Client()
 {
 }
 
-String adfruitio_Client::get_Resp_value(){
-return JSONResp_value;
+String adfruitio_Client::get_Resp_value()
+{
+    return JSONResp_value;
 }
-String adfruitio_Client::get_Resp_id(){
-return JSONResp_id;
+String adfruitio_Client::get_Resp_id()
+{
+    return JSONResp_id;
 }
 
 void adfruitio_Client::send_POST(String feed, String _value)
@@ -22,12 +24,18 @@ void adfruitio_Client::send_POST(String feed, String _value)
     //load_HTTP_Parameter(__Para_CID, CID_value); // need to review the message to send
     //debugResp(__resp);
     load_URL_POST(feed);
-    
+    logger_sendPOST.add_log_plain("feed loaded");
+    logger_sendPOST.push_log();
+
     //debugResp(__resp);
     //load_HTTP_Headers();
     load_HTTP_Parameter(__Para_Userdata, __hdr_x_aio_key, x_aio_key);
+    logger_sendPOST.add_log_plain("key loaded");
+    logger_sendPOST.push_log();
     //debugResp(__resp);
     load_HTTP_Parameter(__Para_content, content_value);
+    logger_sendPOST.add_log_plain("content_value loaded");
+    logger_sendPOST.push_log();
     //debugResp(__resp);
     load_HTTP_Data(_value);
     logger_sendPOST.add_log_plain("data loaded");
@@ -41,7 +49,7 @@ void adfruitio_Client::send_POST(String feed, String _value)
     logger_sendPOST.push_log();
     //debugResp(__resp);
     getRespMeta(globalResp); //todo: this to be got from action post, not as global
-    
+
     logger_sendPOST.add_log_plain("getRespMeta");
     //SerialDebug.println(respCode);
     //SerialDebug.println(respMethod);

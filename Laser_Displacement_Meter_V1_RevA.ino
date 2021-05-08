@@ -17,7 +17,14 @@ void setup()
     startup_actions();
     ClientConnection.checkSimDevice();
     ClientConnection.initlize_SIM_GPRS();
+    SerialDebug.println("initlize_SIM_GPRS ");
+    if (ClientConnection.globalDone)
+        SerialDebug.println("SIM_GPRS Configured");
+
     ClientConnection.initlize_SIM_HTTPS();
+    SerialDebug.println("initlize_SIM_HTTPS ");
+    if (ClientConnection.globalDone)
+        SerialDebug.println("HTTP Ready");
 
     //Laser.laserOn();
 }

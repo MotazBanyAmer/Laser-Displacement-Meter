@@ -35,11 +35,11 @@ public:
     void initlize_SIM_HTTPS();
 
     void checkSimDevice();
+    boolean globalDone = 0;
 
 private:
     /* data */
     String API_URL;
-    boolean globalDone = 0;
     boolean globalError = 0;
     String globalResp = " ";
     unsigned long globalRespTime = 0;
