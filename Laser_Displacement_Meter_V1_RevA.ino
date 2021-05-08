@@ -2,10 +2,12 @@
 #include "TimerConfig.h"
 #include "Timeout.h"
 #include "Central.h"
-#include "Errors_handler.h""
+#include "Errors_handler.h"
 #include "Logger.h"
+#include "Client.h"
 
 B707C Laser;
+adfruitio_Client ClientConnection;
 
 // ISR(TIMER1_OVF_vect);
 
@@ -13,6 +15,8 @@ void setup()
 {
     initProject(); //Initialize project
     startup_actions();
+    ClientConnection.checkSimDevice();
+    ClientConnection.initlize_HTTPs();
 
     //Laser.laserOn();
 }
@@ -45,7 +49,7 @@ void loop()
 
                 // SerialDebug.print("Slow_Msg Error : ");
                 // SerialDebug.println(laserMsg.substring(4, 6));   //!new, fix this
-               
+
                 Laser.getError();
 
                 errorTimerCounter = 0;
@@ -60,6 +64,11 @@ void loop()
         }
 
         //todo: post online
+
+        ClientConnection.send_POST(__feeds_lsrDist, String(payload_Data.distance, 3));
+        SerialDebug.println("Sent: \"" + ClientConnection.get_Resp_value() + "\", to: \"" + __feeds_lsrDist + "\"");
+        ClientConnection.send_POST(__feeds_lsrSigQ, String(payload_Data.signalQuality, 2));
+        SerialDebug.println("Sent: \"" + ClientConnection.get_Resp_value() + "\", to: \"" + __feeds_lsrSigQ + "\"");
 
         dataFlag.Upd_Laser = 0;
     }

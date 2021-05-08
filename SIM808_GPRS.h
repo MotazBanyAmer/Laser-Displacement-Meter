@@ -29,7 +29,7 @@ class SIM808_GPRS
 {
 public:
     void initConnection();
-    void setupBaseMessage();
+    void setupBaseMessage();    //not used (commented out)
     String setupPOSTMessage(String stringValue);
     void updateProcedure(double updateValue);
     void resetDevice();

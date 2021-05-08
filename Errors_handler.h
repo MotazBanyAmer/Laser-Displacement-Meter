@@ -1,6 +1,8 @@
 #ifndef __ERRORS_H__
 #define __ERRORS_H__
 #include "Arduino.h"
+#include "appCommon.h"
+#include "appConfig.h"
 
 //#include "Callbacks.h"
 
