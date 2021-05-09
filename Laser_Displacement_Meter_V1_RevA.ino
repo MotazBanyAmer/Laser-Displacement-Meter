@@ -13,18 +13,19 @@ adfruitio_Client ClientConnection;
 
 void setup()
 {
+    SystemLogger logger_projectInit("Initializing Project");
+
     initProject(); //Initialize project
     startup_actions();
-    ClientConnection.checkSimDevice();
-    ClientConnection.initlize_SIM_GPRS();
-    SerialDebug.println("initlize_SIM_GPRS ");
-    if (ClientConnection.globalDone)
-        SerialDebug.println("SIM_GPRS Configured");
 
-    ClientConnection.initlize_SIM_HTTPS();
-    SerialDebug.println("initlize_SIM_HTTPS ");
-    if (ClientConnection.globalDone)
-        SerialDebug.println("HTTP Ready");
+    if (ClientConnection.checkSimDevice())
+        logger_projectInit.add_microLog_plain("SIM Device Found");
+
+    if (ClientConnection.initlize_SIM_GPRS())
+        logger_projectInit.add_microLog_plain("SIM_GPRS Configured");
+
+    if (ClientConnection.initlize_SIM_HTTPS())
+        logger_projectInit.add_microLog_plain("HTTP Ready");
 
     //Laser.laserOn();
 }
@@ -80,9 +81,10 @@ void loop()
         //todo: post online
 
         ClientConnection.send_POST(__feeds_lsrDist, String(payload_Data.distance, 3));
-        SerialDebug.println("Sent: \"" + ClientConnection.get_Resp_value() + "\", to: \"" + __feeds_lsrDist + "\"");
+        // SerialDebug.println("Sent: \"" + ClientConnection.get_Resp_value() + "\", to: \"" + __feeds_lsrDist + "\"");
         ClientConnection.send_POST(__feeds_lsrSigQ, String(payload_Data.signalQuality, 2));
-        SerialDebug.println("Sent: \"" + ClientConnection.get_Resp_value() + "\", to: \"" + __feeds_lsrSigQ + "\"");
+
+        // SerialDebug.println("Sent: \"" + ClientConnection.get_Resp_value() + "\", to: \"" + __feeds_lsrSigQ + "\"");
 
         dataFlag.Upd_Laser = 0;
     }

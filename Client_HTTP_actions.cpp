@@ -30,20 +30,16 @@ void adfruitio_Client::readHTTP_resp()
     //debugResp(__resp);
     waitResp();
     //debugResp(__resp);
-    parseHTTP_read(globalResp);
+    parseHTTP_read(results.response);
 }
 
-void adfruitio_Client::checkSimDevice()
+bool adfruitio_Client::checkSimDevice()
 {
     Serial.println("System Start");
     Serial.println("Checking SIM");
     SerialSIM.println("AT");
     waitResp();
-    if (globalDone) //todo, what is this!
-    {
-        globalDone = 0;
-        Serial.println("SIM Device Found");
-    }
+    return results.done; //todo: this is to be changed with wait resp
 }
 
 //wait resp Types: null :OK || 1, check and Get Payload || 2: check content
@@ -83,9 +79,9 @@ void adfruitio_Client::waitResp(String textOK = respOk, String textError = respE
         }
     }
 
-    globalDone = tempDone;
-    globalError = tempError;
-    globalResp = tempResp;
+    results.done = tempDone;
+    results.error = tempError;
+    results.response = tempResp;
     //globalRespTime = tempRespTime;
     //globalCurrentTime = tempCurrentTime;
 

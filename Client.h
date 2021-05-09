@@ -31,17 +31,20 @@ public:
     String get_Resp_value();
     String get_Resp_id();
 
-    void initlize_SIM_GPRS();
-    void initlize_SIM_HTTPS();
+    bool initlize_SIM_GPRS();
+    bool initlize_SIM_HTTPS();
 
-    void checkSimDevice();
-    boolean globalDone = 0;
+    bool checkSimDevice();
+    struct Results
+    {
+        boolean done = 0;
+        boolean error = 0;
+        String response = " ";
+    } results;
 
 private:
     /* data */
     String API_URL;
-    boolean globalError = 0;
-    String globalResp = " ";
     unsigned long globalRespTime = 0;
     unsigned long globalCurrentTime = 0;
 
@@ -69,7 +72,7 @@ private:
 
     void parseHTTP_read(String readResp);
     int getRespMeta(String respMeta);
-    void debugResp(byte debugPayload = 0x00, String _text = " ");
+    String debugResp(byte debugPayload = 0x00, String _text = " ");
 
     //actions
     void readHTTP_resp();

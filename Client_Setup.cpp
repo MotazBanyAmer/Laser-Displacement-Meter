@@ -57,37 +57,41 @@ String adfruitio_Client::buildJSON_snglObj(String JSON_name, String JSON_value)
     return "{\"" + JSON_name + "\":\"" + JSON_value + "\"}";
 }
 
-
-void adfruitio_Client::initlize_SIM_HTTPS()
+bool adfruitio_Client::initlize_SIM_HTTPS()
 {
+    SystemLogger logger_init_SIM_GPRS("init SIM HTTPS");
     SerialSIM.println(HTTPInit);
     waitResp();
     SerialSIM.println(HTTPSSL);
     waitResp();
+    return results.done;
 }
 
-void adfruitio_Client::initlize_SIM_GPRS()
+bool adfruitio_Client::initlize_SIM_GPRS()
 {
+    SystemLogger logger_init_SIM_GPRS("init SIM GPRS");
     SerialSIM.print(SgnlStr);
     waitResp();
-    debugResp(__resp);
+    logger_init_SIM_GPRS.add_microLog_plain(debugResp(__resp), 1);
     SerialSIM.print(Provider);
     waitResp();
-    debugResp(__resp);
+    logger_init_SIM_GPRS.add_microLog_plain(debugResp(__resp), 1);
     SerialSIM.print(APN);
     waitResp();
-    debugResp(__resp);
+    logger_init_SIM_GPRS.add_microLog_plain(debugResp(__resp), 1);
     SerialSIM.print(GPRSType);
     waitResp();
-    debugResp(__resp);
+    logger_init_SIM_GPRS.add_microLog_plain(debugResp(__resp), 1);
     SerialSIM.print(query1);
     waitResp();
-    debugResp(__resp);
+    logger_init_SIM_GPRS.add_microLog_plain(debugResp(__resp), 1);
     SerialSIM.print(checkIP);
     waitResp();
-    debugResp(__resp);
+    logger_init_SIM_GPRS.add_microLog_plain(debugResp(__resp), 1);
     load_HTTP_Parameter(__Para_CID, CID_value); // need to review the message to send
-    debugResp(__resp);
+    logger_init_SIM_GPRS.add_microLog_plain(debugResp(__resp), 1);
+    //con here
+    return results.done;
 }
 
 void adfruitio_Client::parseHTTP_read(String readResp)
@@ -115,16 +119,18 @@ int adfruitio_Client::getRespMeta(String respMeta)
     }
 }
 
-void adfruitio_Client::debugResp(byte debugPayload = 0x00, String _text = " ")
+String adfruitio_Client::debugResp(byte debugPayload = 0x00, String _text = " ")
 {
+    String tempTxt = "";
+    if (_text != " ") //? what is this used for?
+        tempTxt = "Text: " + String(_text);
+
     if (debugPayload & __done)
-        Serial.println("Done: " + String(globalDone));
-    if (debugPayload & __error)
-        Serial.println("Error: " + String(globalError)); //##check here
-    if (_text != " ")
-        Serial.println("Text: " + String(_text));
-    if (debugPayload & __resp)
-        Serial.println("Response: " + globalResp);
-    if (debugPayload & __respTime)
-        Serial.println("Response Time: " + String(globalRespTime));
+        return (tempTxt + "Done: " + String(results.done));
+    else if (debugPayload & __error)
+        return ("Error: " + String(results.error)); //##check here
+    else if (debugPayload & __resp)
+        return (tempTxt + "Response: " + results.response);
+    else if (debugPayload & __respTime)
+        return (tempTxt + "Response Time: " + String(globalRespTime));
 }

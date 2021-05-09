@@ -11,7 +11,8 @@ Project:
     Todo: 
         ☐ add check laser at the start of the code
 
-
+Important:
+    - make sure to connect a power source to the system, in order to get the SIM to work
 Log:
     - moved "laser def" and "laser func" to "B707C" .h and .cpp
     - moved Serial tweeks from "common.h" to "app config"
@@ -73,12 +74,18 @@ Log:
     - now working on GPRS, moving things from old code
     - 
 Ideas:
-    ☐ Think of what you can make of laser/B707C constructor.
+    ✔ Think of what you can make of laser/B707C constructor. @done (5/8/2021, 8:22:04 AM)
     ☐ add logging level
+    ☐ load HTTP need to be converted to build message and load into device function
 
 Where to continue:
     - move functions from GPRS_Fun.h to SIM808_GPRS and create a class for the main functions
     - arrange the SIM header defines
+    - remember that there is an issue with the system halted at some point when there is no external charger, fix this.
+      the point was around send post funciton, it hold at getting resp loop
+    - next to work on converting the wait response from void to string, 
+      this affects the all the functions inside, like load parameter functions,
+      where it is a void, but it should be converted to string as well and retrun the results nad other metas
     later:
         - check whether to add the wait functions each to its class, or to create a global one
             - affected classes:
