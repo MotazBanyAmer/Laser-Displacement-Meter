@@ -77,6 +77,8 @@ Ideas:
     ✔ Think of what you can make of laser/B707C constructor. @done (5/8/2021, 8:22:04 AM)
     ☐ add logging level
     ☐ load HTTP need to be converted to build message and load into device function
+    ☐ add background process to logger, that is not connected to direct object, but depends on the its level
+    ☐ add restart and error handler functilaluity
 
 Where to continue:
     - move functions from GPRS_Fun.h to SIM808_GPRS and create a class for the main functions
