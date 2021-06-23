@@ -54,18 +54,19 @@ wiatResponse_t
 waitResponse(uint8_t optionsNumber, option_t optionsData[], uint32_t timeoutTheshold)
 {
     //continue here: this should be used as waiting function
-    Serial.println("Entered Here");
     wiatResponse_t _Results;
     unsigned long _RespTime = 0;
     unsigned long _CurrentTime = 0;
 
     _Results.done = 0;
     _Results.error = 0;
+    _Results.fail = 0;
+    // Serial.println("TargetText: " + optionsData->text);
 
-    _CurrentTime = micros();
+    _CurrentTime = millis();
     while (!_Results.done)
     {
-        _RespTime = micros() - _CurrentTime;
+        _RespTime = millis() - _CurrentTime;
         _Results.timeoutTime = _RespTime;
         if (_RespTime > timeoutTheshold)
         {

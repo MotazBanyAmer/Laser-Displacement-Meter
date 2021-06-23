@@ -20,11 +20,37 @@ void adfruitio_Client::load_HTTP_Data(String _value)
     String JSONObjMsg = buildJSON_snglObj("value", _value);
     //String JSONObjMsg = buildJSON_snglObj("value", "20.336");
     SerialSIM.println("AT+HTTPDATA=" + String(JSONObjMsg.length()) + ',' + String(HTTP_Data_Timeout));
-    waitResp(respDownload);
+    // waitResp(respDownload);
+
+    wiatResponse_t tempResults;
+    option_t temp1[1] = {{"DOWNLOAD", 0, 0}};
+    tempResults = waitResponse(1, temp1, 8000);
+
+    // Serial.println("done: " + String(tempResults.done));
+    // Serial.println("error: " + String(tempResults.error));
+    // Serial.println("fail: " + String(tempResults.fail));
+    // Serial.println("response: " + tempResults.response);
+    // Serial.println("timeoutError: " + String(tempResults.timeoutError));
+    // Serial.println("timeoutTime: " + String(tempResults.timeoutTime));
+
+    // while (1)
+    //     ;
     //SerialDebug.Println("Downloading Data");
     //debugResp(__resp);
     SerialSIM.println(JSONObjMsg);
-    waitResp();
+    // waitResp();
+
+    wiatResponse_t tempResults2;
+    option_t temp2[2] = {{respOk, 0, 0}, {respError, 1, 0}};
+    tempResults2 = waitResponse(2, temp2, 8000);
+    //idea: is when converting this to class, use vector, then add as many options as you want as vector push and continue, just use the method of add option and just add it
+    //idea: is to add a function to print the results and debugging info with single command
+
+    // Serial.println("donex: " + String(tempResults2.done));
+    // Serial.println("errorx: " + String(tempResults2.error));
+    // Serial.println("failx: " + String(tempResults2.fail));
+    // Serial.println("response: " + tempResults2.response);
+
     //SerialDebug.Println("Downloading satatus:");
     //debugResp(__resp);
 }

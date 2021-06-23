@@ -4,24 +4,32 @@ void adfruitio_Client::action_POST()
 {
     SerialSIM.println("AT+HTTPACTION=1");
     // waitResp("+HTTPACTION");
-    Serial.println("I'm Here");
+
     wiatResponse_t tempResults;
     option_t temp1[1] = {{"+HTTPACTION", 0, 0}};
     tempResults = waitResponse(1, temp1, 8000);
 
-    Serial.println("done: " + String(tempResults.done));
-    Serial.println("error: " + String(tempResults.error));
-    Serial.println("fail: " +String( tempResults.fail));
-    Serial.println("progress: " + String(tempResults.progress));
-    Serial.println("response: " + tempResults.response);
-    Serial.println("timeoutError: " +String( tempResults.timeoutError));
-    Serial.println("timeoutTime: " + String(tempResults.timeoutTime));
+    // Serial.println("done: " + String(tempResults.done));
+    // Serial.println("error: " + String(tempResults.error));
+    // Serial.println("fail: " +String( tempResults.fail));
+    // Serial.println("response: " + tempResults.response);
+    // Serial.println("timeoutError: " +String( tempResults.timeoutError));
+    // Serial.println("timeoutTime: " + String(tempResults.timeoutTime));
 
-    while (1)
-        ;
-    //debugResp(__resp);
-    waitResp("+HTTPACTION:");
-    //debugResp(__resp);
+    // waitResp("+HTTPACTION:");
+    if (!tempResults.error)
+    {
+        option_t temp2[1] = {{"+HTTPACTION:", 0, 0}};
+        tempResults = waitResponse(1, temp2, 8000);
+
+        Serial.println("done: " + String(tempResults.done));
+        Serial.println("error: " + String(tempResults.error));
+        Serial.println("fail: " + String(tempResults.fail));
+        Serial.println("response: " + tempResults.response);
+        Serial.println("timeoutError: " + String(tempResults.timeoutError));
+        Serial.println("timeoutTime: " + String(tempResults.timeoutTime));
+    }
+
     //wait OK
     //wait HTTPACTION... with timeout
     //raise a flag for error or done...
@@ -32,12 +40,30 @@ void adfruitio_Client::action_GET()
     SerialSIM.println("AT+HTTPACTION=0");
     // waitResp("+HTTPACTION");
 
+    wiatResponse_t tempResults;
     option_t temp1[1] = {{"+HTTPACTION", 0, 0}};
-    waitResponse(1, temp1, 100);
+    tempResults = waitResponse(1, temp1, 8000);
 
-    //debugResp(__resp);
-    waitResp("+HTTPACTION:");
-    //debugResp(__resp);
+    // Serial.println("done: " + String(tempResults.done));
+    // Serial.println("error: " + String(tempResults.error));
+    // Serial.println("fail: " +String( tempResults.fail));
+    // Serial.println("response: " + tempResults.response);
+    // Serial.println("timeoutError: " +String( tempResults.timeoutError));
+    // Serial.println("timeoutTime: " + String(tempResults.timeoutTime));
+
+    // waitResp("+HTTPACTION:");
+    if (!tempResults.error)
+    {
+        option_t temp2[1] = {{"+HTTPACTION:", 0, 0}};
+        tempResults = waitResponse(1, temp2, 8000);
+
+        Serial.println("done: " + String(tempResults.done));
+        Serial.println("error: " + String(tempResults.error));
+        Serial.println("fail: " + String(tempResults.fail));
+        Serial.println("response: " + tempResults.response);
+        Serial.println("timeoutError: " + String(tempResults.timeoutError));
+        Serial.println("timeoutTime: " + String(tempResults.timeoutTime));
+    }
     //wait OK
     //wait HTTPACTION... with timeout
     //raise a flag for error or done...

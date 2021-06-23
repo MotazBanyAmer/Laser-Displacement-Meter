@@ -47,9 +47,8 @@ private:
     } status;
 };
 
-typedef struct result
+typedef struct ResponseResults
 {
-    uint8_t progress;
     bool error;
     bool done;
     bool fail;
