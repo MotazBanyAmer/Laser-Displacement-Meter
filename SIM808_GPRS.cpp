@@ -2,6 +2,10 @@
 
 //? should I create a class for wait funcitons!?
 //* this may have to do with the timeout
+
+String Message;
+String stringValueExt;
+
 void SIM808_GPRS::waitResp_sent()
 {
     unsigned long respTime = 0;
@@ -41,6 +45,51 @@ void SIM808_GPRS::waitResp_sent()
                 status.done = 1;
                 status.fail = 0;
                 status.error = 1;
+            }
+        }
+    }
+}
+
+wiatResponse_t
+waitResponse(uint8_t optionsNumber, option_t optionsData[], uint32_t timeoutTheshold)
+{
+    //continue here: this should be used as waiting function
+    Serial.println("Entered Here");
+    wiatResponse_t _Results;
+    unsigned long _RespTime = 0;
+    unsigned long _CurrentTime = 0;
+
+    _Results.done = 0;
+    _Results.error = 0;
+
+    _CurrentTime = micros();
+    while (!_Results.done)
+    {
+        _RespTime = micros() - _CurrentTime;
+        _Results.timeoutTime = _RespTime;
+        if (_RespTime > timeoutTheshold)
+        {
+            _Results.done = 1;
+            _Results.timeoutError = 1;
+            return _Results;
+        }
+        else if (SerialSIM.available() > 0)
+        {
+            String incomingString = SerialSIM.readString();
+            for (uint8_t _for_counter = 0; _for_counter < optionsNumber; _for_counter++)
+            {
+                if (incomingString.indexOf(optionsData[_for_counter].text) != -1)
+                {
+                    // _Results.response = optionsData[_for_counter].text;
+                    _Results.response = incomingString;
+
+                    _Results.error = optionsData[_for_counter].error;
+                    _Results.fail = optionsData[_for_counter].fail;
+                    //? when the fail and error is counted exactly???! in what case? review this
+                    _Results.done = 1;
+                    _Results.timeoutError = 0;
+                    return _Results;
+                }
             }
         }
     }
@@ -171,7 +220,7 @@ String SIM808_GPRS::setupPOSTMessage(String stringValue)
     stringValueExt = stringValue;
     return Message + stringValue + "\"}\n";
 }
-void SIM808_GPRS::updateProcedure(double updateValue)   //send through GPRS port directly
+void SIM808_GPRS::updateProcedure(double updateValue) //send through GPRS port directly
 {
     //  message
     SerialSIM.print(Start);
@@ -184,7 +233,7 @@ void SIM808_GPRS::updateProcedure(double updateValue)   //send through GPRS port
     Serial.println("Sending...");
     waitResp_sent();
 }
-void SIM808_GPRS::initConnection()  //init GPRS direct connection, not HTTP
+void SIM808_GPRS::initConnection() //init GPRS direct connection, not HTTP
 {
     Serial.println("Init Process");
     // Serial.print(Shut);

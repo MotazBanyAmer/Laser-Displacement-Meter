@@ -1,5 +1,6 @@
 #ifndef __SIM808_GPRS_H__
 #define __SIM808_GPRS_H__
+
 #include "Arduino.h"
 #include "appCommon.h"
 #include "appConfig.h"
@@ -18,18 +19,16 @@
 
 #define deactivated "+PDP: DEACT"
 
-String Message;
 
 //todo: convert this to struct or somthing
 
 #define SIM_RST 53
-String stringValueExt;
 
 class SIM808_GPRS
 {
 public:
     void initConnection();
-    void setupBaseMessage();    //not used (commented out)
+    void setupBaseMessage(); //not used (commented out)
     String setupPOSTMessage(String stringValue);
     void updateProcedure(double updateValue);
     void resetDevice();
@@ -45,7 +44,30 @@ private:
         bool done;
         bool error;
         bool fail;
-    } status{0, 0, 0};
+    } status;
 };
 
+typedef struct result
+{
+    uint8_t progress;
+    bool error;
+    bool done;
+    bool fail;
+    bool timeoutError;
+    uint32_t timeoutTime;
+    String response;
+} wiatResponse_t;
+
+typedef struct Options
+{
+    String text;
+    bool error;
+    bool fail;
+} option_t;
+
+wiatResponse_t waitResponse(uint8_t optionsNumber, option_t optionsData[], uint32_t timeoutTheshold);
+//& where to continue: I have stopped here after the code verified
+//look into line 24 in Client HTTP actions.cpp. I'm tested this in Post and Get
+//to replace old wiatResp method, and to test time issues
+//I have stopped due to not being able to use my sim card due to low balance
 #endif

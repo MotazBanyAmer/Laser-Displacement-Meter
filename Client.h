@@ -8,6 +8,7 @@
 #include "appCommon.h"
 #include "appConfig.h"
 #include "Logger.h"
+#include "SIM808_GPRS.h"
 
 //@URL
 #define __Para_URL "URL"

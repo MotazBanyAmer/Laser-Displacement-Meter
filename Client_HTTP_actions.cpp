@@ -3,7 +3,22 @@
 void adfruitio_Client::action_POST()
 {
     SerialSIM.println("AT+HTTPACTION=1");
-    waitResp("+HTTPACTION");
+    // waitResp("+HTTPACTION");
+    Serial.println("I'm Here");
+    wiatResponse_t tempResults;
+    option_t temp1[1] = {{"+HTTPACTION", 0, 0}};
+    tempResults = waitResponse(1, temp1, 8000);
+
+    Serial.println("done: " + String(tempResults.done));
+    Serial.println("error: " + String(tempResults.error));
+    Serial.println("fail: " +String( tempResults.fail));
+    Serial.println("progress: " + String(tempResults.progress));
+    Serial.println("response: " + tempResults.response);
+    Serial.println("timeoutError: " +String( tempResults.timeoutError));
+    Serial.println("timeoutTime: " + String(tempResults.timeoutTime));
+
+    while (1)
+        ;
     //debugResp(__resp);
     waitResp("+HTTPACTION:");
     //debugResp(__resp);
@@ -15,7 +30,11 @@ void adfruitio_Client::action_POST()
 void adfruitio_Client::action_GET()
 {
     SerialSIM.println("AT+HTTPACTION=0");
-    waitResp("+HTTPACTION");
+    // waitResp("+HTTPACTION");
+
+    option_t temp1[1] = {{"+HTTPACTION", 0, 0}};
+    waitResponse(1, temp1, 100);
+
     //debugResp(__resp);
     waitResp("+HTTPACTION:");
     //debugResp(__resp);
@@ -84,5 +103,4 @@ void adfruitio_Client::waitResp(String textOK = respOk, String textError = respE
     results.response = tempResp;
     //globalRespTime = tempRespTime;
     //globalCurrentTime = tempCurrentTime;
-
 }
